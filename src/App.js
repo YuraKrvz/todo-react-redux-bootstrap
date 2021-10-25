@@ -1,4 +1,6 @@
 import './App.css';
+import { useEffect } from 'react';
+import { setLocalStorage } from './components/utils/localStorage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,6 +13,17 @@ import AddTodoPage from './Pages/AddTodoPage';
 import TodoListPage from './Pages/TodoListPage';
 
 function App() {
+
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
+    .then(response => response.json())
+    .then(res => {
+      if(localStorage.length < 1){
+        setLocalStorage('store', {todos: [...res]})
+      }
+    })
+  }, []);
+
 
   return (
     <Provider store={store}>

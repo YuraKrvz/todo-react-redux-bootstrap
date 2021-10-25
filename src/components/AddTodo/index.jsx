@@ -1,16 +1,20 @@
 import React, {useState} from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Modal from 'react-bootstrap/Modal';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { useDispatch } from 'react-redux';
 import {addTodo} from '../../store/actions';
 
-const AddTodo = ()=> {
+const AddTodo = ({handlerModal})=> {
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch(); 
   const handlerAddTodo = () => {
-    dispatch(addTodo(inputValue));
-    setInputValue('');
+    if(inputValue !== ''){
+      dispatch(addTodo(inputValue));
+      setInputValue('');
+      handlerModal();
+    }
   };
   const handlerInput = (e)=> setInputValue(e.currentTarget.value);
 
@@ -23,9 +27,12 @@ const AddTodo = ()=> {
             value={inputValue}
             onChange={handlerInput}
          />      
-         <Button variant="outline-secondary" onClick={handlerAddTodo}>Add</Button>
+         
       </InputGroup>
-      {}
+      <Modal.Footer>
+      <Button variant="outline-secondary" onClick={handlerModal}>Close</Button>
+      <Button variant="primary" onClick={handlerAddTodo}>Add</Button>
+      </Modal.Footer>
     </>
   );
 }
