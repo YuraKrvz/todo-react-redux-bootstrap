@@ -11,7 +11,7 @@ const TodoList = ()=> {
     <>
       <Navigationbar /> 
       <Container className="w-75 p-3">
-        {todos.todos.reverse().map(todo => <Todo todo={todo} key={todo.id} /> )}
+        {todos.todos.map(todo => <Todo todo={todo} key={todo.id} /> )}
       </Container>
     </>
   );
